@@ -63,18 +63,22 @@ if File.file? source
   sourcefiles = [ source ]
 elsif File.directory? source
   sourcefiles = Dir.glob(File.join(source, "*.xml"))
-else 
-  # TODO exit with an error message
 end
 
-sourcefiles.each do |xmlfile|
-  count += 1
-  puts "Converting marcxml file #{xmlfile} to bibframe rdf (#{format})."
-  basename  = File.basename(xmlfile, ".xml")
-  rdffile = File.join(rdfdir, "#{basename}.#{ext}")
-  command = "java -cp /Users/rjy7/Workspace/saxon/saxon9he.jar net.sf.saxon.Query #{method} /Users/rjy7/Workspace/marc2bibframe/xbin/saxon.xqy marcxmluri=#{xmlfile} baseuri=#{baseuri} serialization=#{format} > #{rdffile}"
-  system(command)
-end
+if ! sourcefiles
+  puts "File or directory " + source + " not found."
+elsif File.directory? source and sourcefiles.empty?
+  puts "No files found in directory " + source + "."
+else
+  sourcefiles.each do |xmlfile|
+    count += 1
+    puts "Converting marcxml file #{xmlfile} to bibframe rdf (#{format})."
+    basename  = File.basename(xmlfile, ".xml")
+    rdffile = File.join(rdfdir, "#{basename}.#{ext}")
+    command = "java -cp /Users/rjy7/Workspace/saxon/saxon9he.jar net.sf.saxon.Query #{method} /Users/rjy7/Workspace/marc2bibframe/xbin/saxon.xqy marcxmluri=#{xmlfile} baseuri=#{baseuri} serialization=#{format} > #{rdffile}"
+    system(command)
+  end
 
-puts "Converted #{count} files from marcxml to bibframe rdf."
+  puts "Converted #{count} files from marcxml to bibframe rdf." 
+end
 
