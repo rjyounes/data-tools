@@ -62,7 +62,7 @@ count = 0
 if File.file? source
   sourcefiles = [ source ]
 elsif File.directory? source
-  sourcefiles = Dir.glob(File.join(source, ".xml"))
+  sourcefiles = Dir.glob(File.join(source, "*.xml"))
 else 
   # TODO exit with an error message
 end
