@@ -1,0 +1,1 @@
+java -cp /Users/rjy7/Workspace/saxon/saxon9he.jar net.sf.saxon.Query /Users/rjy7/Workspace/marc2bibframe/xbin/saxon.xqy marcxmluri=/Users/rjy7/data/cul/bib/split/bib.001.1-20.xml baseuri=#{baseuri} serialization=rdfxml usebnodes=false 

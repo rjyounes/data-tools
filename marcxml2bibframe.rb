@@ -1,6 +1,6 @@
 #!/usr/bin/ruby -w
 
-# Convert a directory of MARCXML files to Bibframe RDF
+# Convert a directory of MARCXML files or a single MARCXML file to Bibframe RDF
 
 require 'optparse'
 require 'fileutils'
@@ -37,7 +37,7 @@ OptionParser.new do |opts|
   
 end.parse!
 
-datetime = Time.now.strftime('%Y%m%d-%H%M%S')
+datetime = Time.now.strftime('%Y-%m-%d-%H%M%S')
 targetdir = File.join(targetdir, datetime)  
 FileUtils.makedirs targetdir
 # logfile = targetdir + '.log'
@@ -75,7 +75,7 @@ else
     puts "Converting marcxml file #{xmlfile} to bibframe rdf (#{format})."
     basename  = File.basename(xmlfile, ".xml")
     rdffile = File.join(rdfdir, "#{basename}.#{ext}")
-    command = "java -cp /Users/rjy7/Workspace/saxon/saxon9he.jar net.sf.saxon.Query #{method} /Users/rjy7/Workspace/marc2bibframe/xbin/saxon.xqy marcxmluri=#{xmlfile} baseuri=#{baseuri} serialization=#{format} > #{rdffile}"
+    command = "java -cp /Users/rjy7/Workspace/saxon/saxon9he.jar net.sf.saxon.Query #{method} /Users/rjy7/Workspace/marc2bibframe/xbin/saxon.xqy marcxmluri=#{xmlfile} baseuri=#{baseuri} serialization=#{format} usebnodes=false > #{rdffile}"
     system(command)
   end
 
