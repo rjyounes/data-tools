@@ -4,7 +4,7 @@ first = ARGV[0]
 last = ARGV[1]
 
 # Defaults
-first = 0 if first.nil?
+first = 1 if first.nil?
 last = 179 if last.nil?
 
 length = last.to_s.length
