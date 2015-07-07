@@ -42,7 +42,9 @@ xsl = File.join(script_dir, 'split_marcxml_records.xsl')
 
 # Defaults
 pDestination = "marcxml-split-#{pRecords}" if pDestination.nil?
+# Oddly, in the reverse order the final / gets removed
 pDestination = File.expand_path pDestination
+pDestination = File.join pDestination, ''
 
 Dir.glob("*.xml").each do |file|
   cmd = "java -jar #{saxon} #{file} #{xsl} pRecords=#{pRecords} pDestination=#{pDestination}"
