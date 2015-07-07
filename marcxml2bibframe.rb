@@ -5,6 +5,12 @@
 require 'optparse'
 require 'fileutils'
 
+def current_time
+  t = Time.now
+  t.to_s                              
+  t.strftime "%Y-%m-%d %H:%M:%S %z"  
+end
+
 # Assign default options
 format = 'rdfxml'
 baseuri = source = targetdir = ''
@@ -40,7 +46,7 @@ end.parse!
 datetime = Time.now.strftime('%Y-%m-%d-%H%M%S')
 targetdir = File.join(targetdir, datetime)  
 FileUtils.makedirs targetdir
-# logfile = targetdir + '.log'
+logfile = targetdir + '.log'
 
 rdfdir = File.join(targetdir, 'bibframe', format)
 FileUtils.makedirs rdfdir
@@ -53,6 +59,9 @@ ext = case format
     'json'
   when 'ntriples'
     'nt'
+  # Converter option - doesn't seem to work
+  when 'log'
+    'log'
 end
 
 method = (ext == 'nt' || ext == 'json') ? "'!method=text'" : ''
@@ -70,15 +79,16 @@ if ! sourcefiles
 elsif File.directory? source and sourcefiles.empty?
   puts "No files found in directory " + source + "."
 else
+  puts current_time + " Starting conversion from marcxml to bibframe rdf."
   sourcefiles.each do |xmlfile|
     count += 1
-    puts "Converting marcxml file #{xmlfile} to bibframe rdf (#{format})."
+    puts current_time + " Converting marcxml file #{xmlfile} to bibframe rdf (#{format})."
     basename  = File.basename(xmlfile, ".xml")
     rdffile = File.join(rdfdir, "#{basename}.#{ext}")
     command = "java -cp /Users/rjy7/Workspace/saxon/saxon9he.jar net.sf.saxon.Query #{method} /Users/rjy7/Workspace/marc2bibframe/xbin/saxon.xqy marcxmluri=#{xmlfile} baseuri=#{baseuri} serialization=#{format} usebnodes=false > #{rdffile}"
+    puts command
     system(command)
   end
-
-  puts "Converted #{count} files from marcxml to bibframe rdf." 
+  puts current_time + " Converted #{count} files from marcxml to bibframe rdf." 
 end
 
