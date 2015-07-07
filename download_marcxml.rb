@@ -1,11 +1,17 @@
 #!/usr/bin/ruby -w
 
-# TODO Rewrite to take two args
-# Pad based on number of digits of second arg
+first = ARGV[0]
+last = ARGV[1]
 
-(1..179).each do |n|
-# (101..179).each do |n|
-  s = n.to_s.rjust(3, '0')
+# Defaults
+first = 0 if first.nil?
+last = 179 if last.nil?
+
+length = last.to_s.length
+
+(first...last).each do |n|
+  s = n.to_s.rjust(length, '0')
   filename = "bib.#{s}.xml"
-  `curl http://da-data.library.cornell.edu/bibdata/#{filename} > #{filename}`  
+  `curl http://da-data.library.cornell.edu/bibdata/#{filename} > #{filename}`
+  # puts filename  
 end
