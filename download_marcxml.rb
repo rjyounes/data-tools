@@ -9,7 +9,7 @@ last = 179 if last.nil?
 
 length = last.to_s.length
 
-(first...last).each do |n|
+(first..last).each do |n|
   s = n.to_s.rjust(length, '0')
   filename = "bib.#{s}.xml"
   `curl http://da-data.library.cornell.edu/bibdata/#{filename} > #{filename}`
