@@ -8,19 +8,19 @@ require 'optparse'
 # TODO Use optionsparserls 
 
 # Parse options
-pRecords = 20
-pDestination = nil
+records = 20
+destination = nil
 saxon = nil
 OptionParser.new do |opts|
 
   opts.banner = 'Usage: split_marcxml_files.rb [options]'
 
-  opts.on('--pRecords', '=[OPTIONAL]', String, 'Number of records to split files into. Defaults to 20.') do |arg|
-    pRecords = arg
+  opts.on('--records', '=[OPTIONAL]', String, 'Number of records to split files into. Defaults to 20.') do |arg|
+    records = arg
   end 
 
-  opts.on('--pDestination', '=[OPTIONAL]', String, 'Absolute or relative path to write files to. The directory is assumed to exist. Defaults to ./marcxml-split-#{pRecords}.') do |arg|
-    pDestination = arg
+  opts.on('--destination', '=[OPTIONAL]', String, 'Absolute or relative path to write files to. The directory is assumed to exist. Defaults to ./marcxml-split-#{records}.') do |arg|
+    destination = arg
   end 
   
   opts.on('--saxon', '=[MANDATORY]', String, 'Path to saxon processor.') do |arg|
@@ -42,13 +42,13 @@ xsl = File.join(script_dir, 'split_marcxml_records.xsl')
 
 # Defaults
 # TODO create directory if it doesn't exist
-pDestination = "marcxml-split-#{pRecords}" if pDestination.nil?
+destination = "marcxml-split-#{records}" if destination.nil?
 # Oddly, in the reverse order the final / gets removed
-pDestination = File.expand_path pDestination
-pDestination = File.join pDestination, ''
+destination = File.expand_path destination
+destination = File.join destination, ''
 
 Dir.glob("*.xml").each do |file|
-  cmd = "java -jar #{saxon} #{file} #{xsl} pRecords=#{pRecords} pDestination=#{pDestination}"
+  cmd = "java -jar #{saxon} #{file} #{xsl} records=#{records} destination=#{destination}"
   puts "Executing: #{cmd}"
   `#{cmd}`
 end
