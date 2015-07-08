@@ -43,7 +43,7 @@ xsl = File.join(script_dir, 'split_marcxml_records.xsl')
 # Defaults
 # TODO create directory if it doesn't exist
 destination = "marcxml-split-#{records}" if destination.nil?
-# Oddly, in the reverse order the final / gets removed
+# Oddly, in the reverse order the final slash gets removed by File.expand_path
 destination = File.expand_path destination
 destination = File.join destination, ''
 
