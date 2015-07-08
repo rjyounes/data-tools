@@ -4,6 +4,8 @@
     <xsl:param name="pRecords" select="25"/>
     <!-- Directory to write the new files; can input a value to the stylesheet -->
     <xsl:param name="pDestination"/> 
+    <!-- TODO Allow a pad specification for the filenames -->
+    <!-- <xsl:param name="pPadding" select="3"/> -->
     <!-- Get the filename -->
     <xsl:variable name="filename" select="tokenize(base-uri(.), '/')[last()]"/>
     <!-- Remove the file extension -->
@@ -16,6 +18,7 @@
                 the group.
                 <xsl:variable name="endindex" select="($startindex + $pRecords) - 1"/> -->
             <xsl:variable name="endindex" select="$startindex + count(current-group()) -1"/> 
+            <!-- TODO Pad the indices in the filename -->
             <!-- Name the new file using the orginal file name and range of record indices -->
             <xsl:result-document  href="{$pDestination}{$filenamebase}.{$startindex}-{$endindex}.xml">
                 <collection xmlns="http://www.loc.gov/MARC21/slim">
