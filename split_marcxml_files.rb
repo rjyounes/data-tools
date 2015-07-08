@@ -19,7 +19,7 @@ OptionParser.new do |opts|
     pRecords = arg
   end 
 
-  opts.on('--pDestination', '=[OPTIONAL]', String, 'Absolute or relative path to write files to. Defaults to ./marcxml-split-#{pRecords}.') do |arg|
+  opts.on('--pDestination', '=[OPTIONAL]', String, 'Absolute or relative path to write files to. The directory is assumed to exist. Defaults to ./marcxml-split-#{pRecords}.') do |arg|
     pDestination = arg
   end 
   
@@ -41,6 +41,7 @@ script_dir = File.expand_path(File.dirname(__FILE__))
 xsl = File.join(script_dir, 'split_marcxml_records.xsl')
 
 # Defaults
+# TODO create directory if it doesn't exist
 pDestination = "marcxml-split-#{pRecords}" if pDestination.nil?
 # Oddly, in the reverse order the final / gets removed
 pDestination = File.expand_path pDestination
