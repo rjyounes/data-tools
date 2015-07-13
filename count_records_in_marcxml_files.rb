@@ -10,4 +10,4 @@ Dir.glob("*.xml") do |f|
   puts "Number of records in file #{f}: #{count}"
   total += count
 end
-puts "Total number of records in all files: " + total
+puts "Total number of records in all files: " + total.to_s
