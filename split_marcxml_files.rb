@@ -47,7 +47,7 @@ destination = "marcxml-split-#{records}" if destination.nil?
 destination = File.expand_path destination
 destination = File.join destination, ''
 
-Dir.glob("*.xml").each do |file|
+Dir.glob("*.xml") do |file|
   cmd = "java -jar #{saxon} #{file} #{xsl} pRecords=#{records} pDestination=#{destination}"
   puts "Executing: #{cmd}"
   `#{cmd}`
