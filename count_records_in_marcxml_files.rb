@@ -4,10 +4,8 @@
 
 search_string = "<record"
 count = 0
-#files = Dir.glob("*.xml")
-#files.each do |f|
 Dir.glob("*.xml") do |f|
-  puts f
+  # puts f
   text = IO.read f
   count += text.scan(search_string).length
 end
