@@ -23,7 +23,7 @@ OptionParser.new do |opts|
     destination = arg
   end 
   
-  opts.on('--saxon', '=[MANDATORY]', String, 'Path to saxon processor.') do |arg|
+  opts.on('--saxon', '=[MANDATORY]', String, 'Absolute or relative path to saxon processor.') do |arg|
     saxon = File.expand_path arg
   end
     
@@ -46,6 +46,8 @@ destination = "marcxml-split-#{records}" if destination.nil?
 # Oddly, in the reverse order the final slash gets removed by File.expand_path
 destination = File.expand_path destination
 destination = File.join destination, ''
+
+saxon = File.expand_path saxon
 
 Dir.glob("*.xml") do |file|
   cmd = "java -jar #{saxon} #{file} #{xsl} pRecords=#{records} pDestination=#{destination}"
