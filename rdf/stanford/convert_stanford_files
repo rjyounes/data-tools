@@ -17,7 +17,6 @@ for file in *.rdf.xml; do
     echo "Pretty-printing ${file} to ${prettyprinted}..."
     xmllint --format ${file} > "${prettyprinted}"
 
-    echo "Converting ${prettyprinted} from rdfxml to ntriples..."
     `java -jar ${jar} ${prettyprinted} .nt`  
 
     mv ${prettyprinted} rdfxml
