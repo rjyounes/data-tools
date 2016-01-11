@@ -1,0 +1,25 @@
+# Stanford input data conversions:
+# - Change file extensions from .rdf.xml to .rdf
+# - Pretty-print the rdfxml
+# - Convert rdfxml to ntriples
+# Run from directory containing files
+
+
+mkdir rdfxml
+mkdir ntriples
+echo "Created subdirectory rdfxml for pretty-printed rdf, and ntriples for nt files"
+
+for file in *.rdf.xml; do
+
+    prettyprinted="${file/%.rdf.xml/.rdf}"
+    echo "Pretty-printing ${file} to ${prettyprinted}..."
+    xmllint --format ${file} > "${prettyprinted}"
+
+    echo "Converting ${prettyprinted} from rdfxml to ntriples..."
+    `java -jar /Users/rjy7/data/bib/data-tools/rdf/rdf2rdf-1.0.1-2.3.1.jar ${prettyprinted} .nt`  
+
+    mv ${prettyprinted} rdfxml
+    mv "${prettyprinted/%.rdf/.nt}" ntriples
+
+done
+    
