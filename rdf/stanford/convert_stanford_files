@@ -9,18 +9,20 @@
 jar=$1
 mkdir rdfxml
 mkdir ntriples
-echo "Created subdirectory rdfxml for pretty-printed rdf, and ntriples for nt files"
+echo "Created subdirectory rdfxml for pretty-printed rdf, and ntriples for nt files."
 
 for file in *.rdf.xml; do
 
     prettyprinted="${file/%.rdf.xml/.rdf}"
-    echo "Pretty-printing ${file} to ${prettyprinted}..."
     xmllint --format ${file} > "${prettyprinted}"
-
+    echo "Pretty-printed ${file} to ${prettyprinted}."
+    
     `java -jar ${jar} ${prettyprinted} .nt`  
 
     mv ${prettyprinted} rdfxml
     mv "${prettyprinted/%.rdf/.nt}" ntriples
+    echo "Converted ${prettyprinted} to ntriple format in ntriples directory."
 
 done
     
+# Skipping this: remove any line in the file that doesn't end with a period.

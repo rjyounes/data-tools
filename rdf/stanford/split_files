@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Split file into multiple files by line count
+
+# TODO Combine with convert_stanford_files
+
+mkdir -p split
+echo "Creating split subdirectory for new files."
+
+for file in *.nt; do
+    base="$(basename ${file} .nt)"
+    prefix="${file/%.nt/.}"
+    split -l 25000 -a3 $file $prefix    
+    echo "Split ${file} into multiple files of 25000 lines per file."
+
+    count=0
+
+    for newfile in "${base}".a*; do
+
+        infix="$(printf "%03d" ${count})"
+
+        # add the infix + nt extension to basename
+        newname="${base}.${infix}.nt"
+        
+        # move file to split directory with new name
+        mv $newfile "split/${newname}"
+    
+        let "count++"
+    
+        echo "Moved ${newfile} to split/${newname}."
+    done
+done
