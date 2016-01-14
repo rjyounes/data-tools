@@ -28,4 +28,39 @@ Dir.glob("ab.*").each do |f|
   
 end
 
+
+# Merge every 3 files into a single file
+# TODO combine with loop above
+
+count = 0
+contents = ''
+filenums = []
+
+merged = "merged"
+Dir.mkdir(merged) unless File.exists?(merged)
+
+filecount = Dir.glob("ntriples/*.nt").length
+
+puts filecount
+
+Dir.glob("ntriples/*.nt").each do |f|
+
+  count += 1
     
+  # e.g., harvard.08.990.nt
+  segments = f.split(".")
+  
+  # 990
+  filenums.push segments[2]
+  
+  contents += File.open(f).read
+  if count % 3 == 0 or count == filecount
+    # e.g., harvard.08.990-991-992.nt
+    newfile = [ File.basename(segments[0]), segments[1], filenums.join("-"), "nt" ].join(".")
+    puts newfile
+    File.open(File.join(merged, newfile), 'w') { |file| file.write(contents) }
+    contents = ''
+    filenums.clear
+  end
+
+end    
