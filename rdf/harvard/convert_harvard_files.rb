@@ -29,8 +29,9 @@ Dir.glob("ab.*").each do |f|
 end
 
 
-# Merge every 3 files into a single file
-# TODO combine with loop above
+# Merge every 3 files into a single file.
+# No sense merging into above loop, because the rdf converter writes to a file.
+# Would save nothing but the additional iteration.
 
 count = 0
 contents = ''
