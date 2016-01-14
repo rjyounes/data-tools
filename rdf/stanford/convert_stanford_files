@@ -9,7 +9,7 @@
 jar=$1
 mkdir rdfxml
 mkdir ntriples
-echo "Created subdirectory rdfxml for pretty-printed rdf, and ntriples for nt files."
+echo "Created subdirectories rdfxml for pretty-printed rdf, and ntriples for nt files."
 
 for file in *.rdf.xml; do
 
