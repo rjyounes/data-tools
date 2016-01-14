@@ -17,10 +17,12 @@ Dir.glob("ab.*").each do |f|
 
   basename = f.sub("ab.bib", "harvard").sub(/2015.*_(\d+)/, "\\1")
   rdffile = basename + ".rdf"
+  puts "Renaming file #{f} to #{rdffile}."
   File.rename(f, rdffile)
   ntfile = basename + ".nt"
   cmd = "java -jar #{jar} #{rdffile} #{ntfile}"
   `#{cmd}`
+  puts "Moving #{rdffile} and #{ntfile} to subdirectories."
   FileUtils.mv(rdffile, "rdfxml")
   FileUtils.mv(ntfile, "ntriples")
   
