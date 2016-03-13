@@ -13,6 +13,8 @@ require 'fileutils'
 # Use for logging
 # datetime_format = '%Y-%m-%d %H:%M:%S'
 
+puts "Start conversion."
+
 jar=ARGV[0]
 Dir.mkdir("rdfxml") unless File.exist?("rdfxml")
 Dir.mkdir("ntriples") unless File.exist?("ntriples")
@@ -43,10 +45,13 @@ Dir.glob("ab.*").each do |f|
 
 end
 
+puts "Done converting rdfxml to ntripes."
 
 # Merge every 3 files into a single file.
 # No sense merging into above loop, because the rdf converter has to write to 
 # a file anyway, so we wouldn't save file writes.
+
+puts "Start merging files."
 
 count = 0
 contents = ''
