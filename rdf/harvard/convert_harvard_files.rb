@@ -58,7 +58,7 @@ contents = ''
 filenums = []
 
 merged = "merged"
-Dir.mkdir(merged) unless File.exists?(merged)
+Dir.mkdir(merged) unless File.exist?(merged)
 
 filecount = Dir.glob("ntriples/*.nt").length
 
