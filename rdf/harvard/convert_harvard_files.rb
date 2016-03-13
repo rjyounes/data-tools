@@ -14,8 +14,8 @@ require 'fileutils'
 # datetime_format = '%Y-%m-%d %H:%M:%S'
 
 jar=ARGV[0]
-Dir.mkdir("rdfxml") unless File.exists?("rdfxml")
-Dir.mkdir("ntriples") unless File.exists?("ntriples")
+Dir.mkdir("rdfxml") unless File.exist?("rdfxml")
+Dir.mkdir("ntriples") unless File.exist?("ntriples")
 
 Dir.glob("ab.*").each do |f|
 
