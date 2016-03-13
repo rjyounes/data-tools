@@ -83,3 +83,5 @@ Dir.glob("ntriples/*.nt").each do |f|
   end
 
 end    
+
+puts "Done converting files."
