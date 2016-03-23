@@ -1,0 +1,6 @@
+mkdir ld4l_25 ld4l_50 ld4l_75
+let "n = `ls ld4l | wc -l` / 4"
+ls ld4l | head -n $n | while read f ; do mv ld4l/$f ld4l_25 ; done
+ls ld4l | head -n $n | while read f ; do mv ld4l/$f ld4l_50 ; done
+ls ld4l | head -n $n | while read f ; do mv ld4l/$f ld4l_75 ; done
+mv ld4l ld4l_100
