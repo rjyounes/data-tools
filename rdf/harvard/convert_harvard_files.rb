@@ -64,6 +64,8 @@ filecount = Dir.glob("ntriples/*.nt").length
 
 puts filecount
 
+# NB Should sort files first, otherwise they are grouped in odd ways.
+# E.g., harvard.03.3841-3605-7774.nt.
 Dir.glob("ntriples/*.nt").each do |f|
 
   count += 1
