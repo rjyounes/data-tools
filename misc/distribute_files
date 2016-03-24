@@ -1,6 +1,37 @@
-mkdir ld4l_25 ld4l_50 ld4l_75
-let "n = `ls ld4l | wc -l` / 4"
-ls ld4l | head -n $n | while read f ; do mv ld4l/$f ld4l_25 ; done
-ls ld4l | head -n $n | while read f ; do mv ld4l/$f ld4l_50 ; done
-ls ld4l | head -n $n | while read f ; do mv ld4l/$f ld4l_75 ; done
-mv ld4l ld4l_100
+#!/bin/bash
+
+dir=$1 # name of directory
+num=$2 # number of divisions to create
+
+echo "Original directory name: $dir"
+
+total=`ls ${dir} | wc -l` # files in directory
+echo "Total number of files in $dir: $total"
+
+echo "Number of files per directory: $num" 
+
+let "numdirs=${total}/${num}"
+echo "Number of directories to create: $numdirs"
+
+for (( i=1; i<=${numdirs}; i++ ));
+do 
+  mkdir ${dir}_${i}
+  echo "Moving ${num} files to ${dir}_${i}"
+  ls ${dir} | head -n $num | while read f; do mv ${dir}/${f} ${dir}_${i}; done
+done
+
+# Adding the if creates an extra directory named "0" - don't know why
+#if [ `ls ${dir} | wc -l` > 0 ];
+#then
+#  echo "Moving remaining files to ${dir}_${numdirs}"
+#  mv ${dir}/* ${dir}_${numdirs}
+#fi
+
+echo "Moving any remaining files to ${dir}_${numdirs}"
+mv ${dir}/* ${dir}_${numdirs}
+  
+echo "Deleting original directory"
+rm -r ${dir}
+
+echo "Done."
+
