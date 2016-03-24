@@ -15,21 +15,19 @@ echo "Number of directories to create: $numdirs"
 
 for (( i=1; i<=${numdirs}; i++ ));
 do 
-  mkdir ${dir}_${i}
-  echo "Moving ${num} files to ${dir}_${i}"
-  ls ${dir} | head -n $num | while read f; do mv ${dir}/${f} ${dir}_${i}; done
+    mkdir ${dir}_${i}
+    echo "Moving ${num} files to ${dir}_${i}"
+    ls ${dir} | head -n $num | while read f; do mv ${dir}/${f} ${dir}_${i}; done
 done
 
-# Adding the if creates an extra directory named "0" - don't know why
-#if [ `ls ${dir} | wc -l` > 0 ];
-#then
-#  echo "Moving remaining files to ${dir}_${numdirs}"
-#  mv ${dir}/* ${dir}_${numdirs}
-#fi
+if [ `ls ${dir} | wc -l` -gt  0 ];
+then
+    let "last=$(( $numdirs + 1 ))"
+    mkdir ${dir}_${last}
+    echo "Moving remaining files to ${dir}_${last}"
+    mv ${dir}/* ${dir}_${last}
+fi
 
-echo "Moving any remaining files to ${dir}_${numdirs}"
-mv ${dir}/* ${dir}_${numdirs}
-  
 echo "Deleting original directory"
 rm -r ${dir}
 
