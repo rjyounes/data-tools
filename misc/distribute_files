@@ -1,34 +1,41 @@
 #!/bin/bash
 
-dir=$1 # name of directory
-num=$2 # number of divisions to create
+# Name of original directory
+dir=$1
 
-echo "Original directory name: $dir"
+# Number of files per directory
+# Or do we want to specify number of directories?
+num=$2 # number of files per directory
+
+echo "Original directory name: ${dir}."
 
 total=`ls ${dir} | wc -l` # files in directory
-echo "Total number of files in $dir: $total"
+echo "Total number of files in $dir: ${total}."
 
-echo "Number of files per directory: $num" 
+echo "Number of files per directory: ${num}." 
 
-let "numdirs=${total}/${num}"
-echo "Number of directories to create: $numdirs"
+let "numdirs=${total}/${num}."
+echo "Number of directories to create: ${numdirs}."
 
 for (( i=1; i<=${numdirs}; i++ ));
 do 
     mkdir ${dir}_${i}
-    echo "Moving ${num} files to ${dir}_${i}"
+    echo "Moving ${num} files to ${dir}_${i}."
     ls ${dir} | head -n $num | while read f; do mv ${dir}/${f} ${dir}_${i}; done
 done
 
+# There could be an option whether to create new dir for remaing files, or  
+# throw them into the last one. Or could do the former if over n% of $num, 
+# otherwise the latter.
 if [ `ls ${dir} | wc -l` -gt  0 ];
 then
     let "last=$(( $numdirs + 1 ))"
     mkdir ${dir}_${last}
-    echo "Moving remaining files to ${dir}_${last}"
+    echo "Moving remaining files to ${dir}_${last},"
     mv ${dir}/* ${dir}_${last}
 fi
 
-echo "Deleting original directory"
+echo "Deleting original directory."
 rm -r ${dir}
 
 echo "Done."
